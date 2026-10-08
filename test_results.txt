@@ -1,0 +1,30 @@
+
+==================== Testing CNN_video.h5 ====================
+Attempting to load CNN model from CNN_video.h5...
+Standard loading failed: Error when deserializing class 'InputLayer' using config={'batch_shape': [None, 224, 224, 3], 'dtype': 'float32', 'sparse': False, 'ragged': False, 'name': 'input_layer_5'}.
+
+Exception encountered: Unrecognized keyword arguments: ['batch_shape']
+Creating compatible model architecture...
+Loading weights into compatible model...
+[SUCCESS] Successfully loaded weights into compatible model
+Actual: Abuse      | Predicted: Assault    (0.81) | Prob[Assault]: 0.8116
+Actual: Arrest     | Predicted: Assault    (0.80) | Prob[Assault]: 0.8010
+Actual: Assault    | Predicted: Assault    (0.77) | Prob[Assault]: 0.7719
+Actual: Burglary   | Predicted: Assault    (0.79) | Prob[Assault]: 0.7905
+Actual: Fighting   | Predicted: Assault    (0.78) | Prob[Assault]: 0.7812
+Actual: normal     | Predicted: Assault    (0.78) | Prob[Assault]: 0.7816
+
+==================== Testing best_model.h5 ====================
+Attempting to load CNN model from best_model.h5...
+Standard loading failed: Error when deserializing class 'InputLayer' using config={'batch_shape': [None, 224, 224, 3], 'dtype': 'float32', 'sparse': False, 'ragged': False, 'name': 'input_layer_6'}.
+
+Exception encountered: Unrecognized keyword arguments: ['batch_shape']
+Creating compatible model architecture...
+Loading weights into compatible model...
+[SUCCESS] Successfully loaded weights into compatible model
+Actual: Abuse      | Predicted: Normal     (0.40) | Prob[Assault]: 0.0352
+Actual: Arrest     | Predicted: Normal     (0.36) | Prob[Assault]: 0.0378
+Actual: Assault    | Predicted: Abuse      (0.36) | Prob[Assault]: 0.0335
+Actual: Burglary   | Predicted: Abuse      (0.39) | Prob[Assault]: 0.0384
+Actual: Fighting   | Predicted: Normal     (0.39) | Prob[Assault]: 0.0341
+Actual: normal     | Predicted: Abuse      (0.38) | Prob[Assault]: 0.0408

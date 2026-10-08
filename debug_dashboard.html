@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffe6e6; color: red; }
+        .success { background: #e6ffe6; color: green; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Dashboard Debug</h1>
+    <button onclick="testDirectFetch()">Test Direct Fetch</button>
+    <button onclick="testWithCORS()">Test with CORS Proxy</button>
+    <button onclick="clearLogs()">Clear Logs</button>
+    
+    <div id="logs"></div>
+    
+    <h2>Latest Data</h2>
+    <table id="dataTable">
+        <thead>
+            <tr><th>Time</th><th>Status</th><th>Lat</th><th>Lon</th></tr>
+        </thead>
+        <tbody id="dataBody"></tbody>
+    </table>
+
+<script>
+    let logCount = 0;
+    
+    function log(message, type = 'info') {
+        const logs = document.getElementById('logs');
+        const div = document.createElement('div');
+        div.className = `log ${type}`;
+        div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+        logs.appendChild(div);
+        logCount++;
+        
+        // Keep only last 10 logs
+        if (logCount > 10) {
+            logs.removeChild(logs.firstChild);
+            logCount--;
+        }
+    }
+    
+    async function testDirectFetch() {
+        log('Testing direct fetch to ThingSpeak...', 'info');
+        
+        try {
+            const url = 'https://api.thingspeak.com/channels/2374983/feeds.json?results=5';
+            log(`Fetching: ${url}`, 'info');
+            
+            const response = await fetch(url);
+            log(`Response status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            log(`Data received: ${data.feeds.length} feeds`, 'success');
+            
+            // Update table
+            const tbody = document.getElementById('dataBody');
+            tbody.innerHTML = '';
+            
+            data.feeds.forEach((feed, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${new Date(feed.created_at).toLocaleString()}</td>
+                    <td>${feed.field2 || 'N/A'}</td>
+                    <td>${feed.field3 || 'N/A'}</td>
+                    <td>${feed.field4 || 'N/A'}</td>
+                `;
+            });
+            
+        } catch (error) {
+            log(`Error: ${error.message}`, 'error');
+            console.error('Full error:', error);
+        }
+    }
+    
+    async function testWithCORS() {
+        log('Testing with CORS proxy...', 'info');
+        
+        try {
+            // Using a CORS proxy
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const url = `${proxyUrl}https://api.thingspeak.com/channels/2374983/feeds.json?results=5`;
+            log(`Fetching: ${url}`, 'info');
+            
+            const response = await fetch(url);
+            log(`Response status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            log(`Data received: ${data.feeds.length} feeds`, 'success');
+            
+        } catch (error) {
+            log(`CORS proxy error: ${error.message}`, 'error');
+        }
+    }
+    
+    function clearLogs() {
+        document.getElementById('logs').innerHTML = '';
+        logCount = 0;
+    }
+    
+    // Auto-test every 5 seconds
+    setInterval(testDirectFetch, 5000);
+    
+    // Initial test
+    testDirectFetch();
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+# ========================================
+# Python
+# ========================================
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ========================================
+# Virtual environments
+# ========================================
+venv/
+.venv/
+env/
+ENV/
+
+# ========================================
+# Environment variables / secrets
+# ========================================
+.env
+*.env
+set_twilio_env.py
+
+# ========================================
+# Datasets
+# ========================================
+Dataset/
+datasets/
+
+# ========================================
+# Trained models / model artifacts
+# ========================================
+*.h5
+*.keras
+*.pt
+*.pth
+*.onnx
+CNN_video.model/
+
+# ========================================
+# YOLO / training outputs
+# ========================================
+runs/
+detections/
+
+# ========================================
+# Generated files / logs
+# ========================================
+*.log
+*.tmp
+temp.jpg
+location_cache.json
+
+# ========================================
+# IDE
+# ========================================
+.vscode/
+.idea/
+
+# ========================================
+# OS
+# ========================================
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Files containing exposed credentials
+# ========================================
+
+# Old application versions
+app_backup.py
+app_clean.py
+app_complete.py
+
+# Credential/debug scripts
+check_channel.py
+check_channel_status.py
+quick_test.py
+send_test_data.py
+test.py
+test_correct_key.py
+test_dashboard.py
+test_realtime.py
+test_thingspeak.py
+
+# Credential-containing launch scripts
+launch_app.bat
+launch_app.ps1
+
+# HTML files containing ThingSpeak API keys
+dashboard_demo.html
+main.html
+main_working.html
+test_thingspeak_direct.html
